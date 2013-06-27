@@ -27,8 +27,8 @@ exports = module.exports = (blueprint, formatters, options = {}) ->
   throw new Error lintError  if lintError.length
 
   _.defaults contentTypeFormatters,
-    headers: exports.headersFormatter
-    json: exports.jsonFormatter
+    headers: exports.headers
+    json: exports.json
 
   scenario = blueprintParser.parse blueprint
   for operation in scenario.operations
@@ -41,15 +41,15 @@ exports = module.exports = (blueprint, formatters, options = {}) ->
   Blueprint.fromJSON(scenario).toBlueprint()
 
 
-exports.headersFormatter = (headers) ->
+exports.headers = (headers) ->
   headers = utils.normalizeHeaders headers
   headers = utils.camelizeKeys headers # FIXME new module!!!
   headers = utils.sortObj headers
   headers
 
 
-exports.jsonFormatter = (reqres, operation, scenario) ->
-  return  unless utils.isJsonCT contentType
+exports.json = (reqres, operation, scenario) ->
+  return reqres.body  unless utils.isJsonCT contentType
   content = reqres.body
   contentJSON = JSON.parse content
   # Sort properties

@@ -31,9 +31,8 @@ exports = module.exports = (blueprint, contentLinters = {}) ->
     }
     return result
 
-
   _.defaults contentLinters,
-    json: exports.jsonLinter
+    json: exports.json
 
   for operation in scenario.operations
     for direction in ['request', 'response']
@@ -46,12 +45,11 @@ exports = module.exports = (blueprint, contentLinters = {}) ->
           error.operation = operation
           error.direction = direction
         result = result.concat linterResult
-
   result
 
 
-exports.jsonLinter = (reqres, operation, scenario, result) ->
-  return  unless utils.isJsonCT reqres.headers['content-type']
+exports.json = (reqres, operation, scenario, result) ->
+  return result  unless utils.isJsonCT reqres.headers['content-type']
   content = reqres.body
   try
     # Use builtin parser for speed
@@ -65,3 +63,4 @@ exports.jsonLinter = (reqres, operation, scenario, result) ->
         type: 'invalid_json'
         native: e2
       }
+  result
