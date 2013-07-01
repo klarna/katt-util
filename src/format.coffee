@@ -19,6 +19,7 @@ Blueprint = blueprintParser.ast.Blueprint
 utils = require './utils'
 lint = require './lint'
 _ = require 'lodash'
+camelizeHeaders = require 'camelize-http-headers'
 
 
 exports = module.exports = (blueprint, formatters, options = {}) ->
@@ -27,29 +28,36 @@ exports = module.exports = (blueprint, formatters, options = {}) ->
   throw new Error lintError  if lintError.length
 
   _.defaults contentTypeFormatters,
-    headers: exports.headers
     json: exports.json
 
   scenario = blueprintParser.parse blueprint
   for operation in scenario.operations
     for direction in ['request', 'response']
       reqres = operation[direction]
-      headerFormatter = formatters.headers reqres, operation, scenario
+      formatters.normalizeHeaders reqres, operation, scenario
       for formatterKey, formatter of formatters
-        continue  if formatterKey is 'headers'
         formatter reqres, operation, scenario
+      formatters.headers reqres, operation, scenario
   Blueprint.fromJSON(scenario).toBlueprint()
 
 
-exports.headers = (headers) ->
-  headers = utils.normalizeHeaders headers
-  headers = utils.camelizeKeys headers # FIXME new module!!!
+exports.normalizeHeaders = (reqres, operation, scenario) ->
+  headers = {}
+  for name, value of reqres.headers
+    name = name.trim().toLowerCase()
+    headers[name] = value
+  reqres.headers = headers
+
+
+exports.headers = (reqres, operation, scenario) ->
+  headers = reqres.headers
+  headers = camelizeHeaders headers
   headers = utils.sortObj headers
-  headers
+  reqres.headers = headers
 
 
 exports.json = (reqres, operation, scenario) ->
-  return reqres.body  unless utils.isJsonCT contentType
+  return reqres.body  unless utils.isJsonCT reqres.headers['content-type']
   content = reqres.body
   contentJSON = JSON.parse content
   # Sort properties

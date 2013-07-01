@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "argparse": "~0.1.13",
+    "camelize-http-headers": "0.0.1",
     "jsonlint": "~1.6.0",
     "katt-blueprint-parser": "~1.0.3",
     "lodash": "~1.3.1"

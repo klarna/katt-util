@@ -21,31 +21,5 @@ exports.sortObj = (obj) ->
   result
 
 
-exports.camelize = (s) ->
-  s = s.trim()
-  s = s.replace /[-_\s]+(.)?/g, (match, c) -> '-' + c.toUpperCase()
-  s = s.charAt(0).toUpperCase() + s.slice 1
-  s
-
-
-exports.camelizeKeys = (obj) ->
-  result = {}
-  keys = Object.keys obj
-  for key, index in keys
-    header = exports.camelize key
-    result[header] = obj[key]
-  result
-
-
 exports.isJsonCT = (contentType) ->
   /\bjson\b/.test contentType
-
-
-exports.normalizeHeaders = (headers) ->
-  result = {}
-  for name, value of headers
-    # Lowercase names
-    # since headers are case-insensitive
-    name = name.trim().toLowerCase()
-    result[name] = value
-  result
