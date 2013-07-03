@@ -24,11 +24,14 @@ lint = require './lint'
 exports = module.exports = (har, ignoreHeaders = []) ->
   har = JSON.parse har
   blueprint =
+    description: "Converted from HAR #{har.log.pages[0].title} #{har.log.pages[0].startedDateTime}"
     transactions: []
-  for entry in har.log.entries
+  for entry, index in har.log.entries
+    step = index + 1
     req = entry.request
     res = entry.response
     transaction =
+      description: "step #{step}"
       request:
         method: req.method
         url: req.url.replace /[^\/]+\/\/[^\/]+/, ''
