@@ -42,11 +42,7 @@ exports = module.exports = (blueprint, formatters, options = {}) ->
 
 
 exports.normalizeHeaders = (reqres, transaction, scenario) ->
-  headers = {}
-  for name, value of reqres.headers
-    name = name.trim().toLowerCase()
-    headers[name] = value
-  reqres.headers = headers
+  reqres.headers = utils.normalizeHeaders reqres.headers
 
 
 exports.headers = (reqres, transaction, scenario) ->

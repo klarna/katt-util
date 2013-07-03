@@ -23,3 +23,11 @@ exports.sortObj = (obj) ->
 
 exports.isJsonCT = (contentType) ->
   /\bjson\b/.test contentType
+
+
+exports.normalizeHeaders = (headers) ->
+  result = {}
+  for name, value of headers
+    name = name.trim().toLowerCase()
+    result[name] = value
+  result
