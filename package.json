@@ -14,10 +14,6 @@
     "beautifier"
   ],
   "version": "0.0.1",
-  "author": "Klarna AB",
-  "contributors": [
-    "Andrei Neculau <@andreineculau>"
-  ],
   "repository": {
     "type": "git",
     "url": "gitosis@git.internal.machines:katt-util.git"
