@@ -31,17 +31,17 @@ exports = module.exports = (blueprint, formatters, options = {}) ->
     json: exports.json
 
   scenario = blueprintParser.parse blueprint
-  for operation in scenario.operations
+  for transaction in scenario.transactions
     for direction in ['request', 'response']
-      reqres = operation[direction]
-      formatters.normalizeHeaders reqres, operation, scenario
+      reqres = transaction[direction]
+      formatters.normalizeHeaders reqres, transaction, scenario
       for formatterKey, formatter of formatters
-        formatter reqres, operation, scenario
-      formatters.headers reqres, operation, scenario
+        formatter reqres, transaction, scenario
+      formatters.headers reqres, transaction, scenario
   Blueprint.fromJSON(scenario).toBlueprint()
 
 
-exports.normalizeHeaders = (reqres, operation, scenario) ->
+exports.normalizeHeaders = (reqres, transaction, scenario) ->
   headers = {}
   for name, value of reqres.headers
     name = name.trim().toLowerCase()
@@ -49,14 +49,14 @@ exports.normalizeHeaders = (reqres, operation, scenario) ->
   reqres.headers = headers
 
 
-exports.headers = (reqres, operation, scenario) ->
+exports.headers = (reqres, transaction, scenario) ->
   headers = reqres.headers
   headers = camelizeHeaders headers
   headers = utils.sortObj headers
   reqres.headers = headers
 
 
-exports.json = (reqres, operation, scenario) ->
+exports.json = (reqres, transaction, scenario) ->
   return reqres.body  unless utils.isJsonCT reqres.headers['content-type']
   content = reqres.body
   contentJSON = JSON.parse content

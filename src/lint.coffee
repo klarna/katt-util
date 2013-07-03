@@ -34,21 +34,21 @@ exports = module.exports = (blueprint, contentLinters = {}) ->
   _.defaults contentLinters,
     json: exports.json
 
-  for operation in scenario.operations
+  for transaction in scenario.transactions
     for direction in ['request', 'response']
-      reqres = operation[direction]
+      reqres = transaction[direction]
       headers = utils.normalizeHeaders reqres.headers
       for linterKey, linter of contentLinters
         linterResult = []
-        linter reqres, operation, scenario, linterResult
+        linter reqres, transaction, scenario, linterResult
         for error in linterResult
-          error.operation = operation
+          error.transaction = transaction
           error.direction = direction
         result = result.concat linterResult
   result
 
 
-exports.json = (reqres, operation, scenario, result) ->
+exports.json = (reqres, transaction, scenario, result) ->
   return result  unless utils.isJsonCT reqres.headers['content-type']
   content = reqres.body
   try

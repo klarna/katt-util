@@ -62,8 +62,8 @@ main = (args = process.args) ->
       exitCode = 1
       for error in errors
         details = []
-        details.push error.details.operation.name  if error.details?.operation
-        details.push error.details.operation.direction  if error.details?.operation
+        details.push error.details.transaction.name  if error.details?.transaction
+        details.push error.details.transaction.direction  if error.details?.transaction
         details = details.join ' '
         console.log "#{type} #{details}", error.native
   return exitCode
