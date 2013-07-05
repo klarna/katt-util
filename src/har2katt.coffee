@@ -21,7 +21,7 @@ _ = require 'lodash'
 lint = require './lint'
 
 
-exports = module.exports = (har) ->
+exports = module.exports = (har, ignoreHeaders = []) ->
   har = JSON.parse har
   blueprint =
     transactions: []
@@ -32,27 +32,17 @@ exports = module.exports = (har) ->
       request:
         method: req.method
         url: req.url.replace /[^\/]+\/\/[^\/]+/, ''
-        headers: exports._headers req.headers
+        headers: exports._headers req.headers, ignoreHeaders
         body: req.postData?.text or null
       response:
         status: res.status
-        headers: exports._headers res.headers
+        headers: exports._headers res.headers, ignoreHeaders
         body: res.content?.text or null
     blueprint.transactions.push transaction
   Blueprint.fromJSON(blueprint).toBlueprint()
 
 
-exports._headers = (harEntryHeaders) ->
+exports._headers = (harEntryHeaders, ignoreHeaders) ->
   harEntryHeaders = _.reject harEntryHeaders, (header) ->
-    header.name.toLowerCase() in [
-      'accept-encoding'
-      'cache-control'
-      'connection'
-      'content-encoding'
-      'content-length'
-      'date'
-      'host'
-      'last-modified'
-      'pragma'
-    ]
+    header.name.toLowerCase() in ignoreHeaders
   _.object _.pluck(harEntryHeaders, 'name'), _.pluck(harEntryHeaders, 'value')

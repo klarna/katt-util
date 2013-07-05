@@ -29,8 +29,17 @@ parseArgs = (args) ->
     version: pkg.version
     addHelp: true
 
-  parser.addArgument ['archives'],
-    help: 'Archives as files'
+  parser.addArgument ['--ignoreCommon'],
+    help: "Ignore common headers. (%(defaultValue)s)"
+    nargs: 0
+
+  parser.addArgument ['-i', '--ignore'],
+    help: "Header to ignore. (%(defaultValue)s)"
+    defaultValue: undefined
+    nargs: '*'
+
+  parser.addArgument ['archive'],
+    help: 'HTTP Archive as file'
     nargs: '+'
 
   parser.parseArgs args
@@ -38,9 +47,22 @@ parseArgs = (args) ->
 
 main = (args = process.args) ->
   args = parseArgs args
-  for filename in args.archives
+  for filename in args.archive
     har = fs.readFileSync filename, 'utf-8'
-    blueprint = har2katt har
+    ignoreHeaders = args.ignore or []
+    if args.ignoreCommon
+      ignoreHeaders = ignoreHeaders.concat [
+        'accept-encoding'
+        'cache-control'
+        'connection'
+        'content-encoding'
+        'content-length'
+        'date'
+        'host'
+        'last-modified'
+        'pragma'
+      ]
+    blueprint = har2katt har, ignoreHeaders
     console.log blueprint
 
 process.exit main()  if require.main is module
