@@ -19,5 +19,6 @@ prefix = './src'  if /.coffee$/.test module.filename
 
 module.exports =
   format: require "#{prefix}/format"
+  har2katt: require "#{prefix}/har2katt"
   lint: require "#{prefix}/lint"
   utils: require "#{prefix}/utils"
