@@ -16,6 +16,7 @@ npm install katt-util
 
 ```bash
 katt-lint FOLDER/FILE ...
+# katt-lint -h for options
 ```
 
 ```coffee
@@ -32,13 +33,27 @@ if errors.length # if there are errors
 
 ```bash
 katt-format FOLDER/FILE ...
+# katt-format -h for options
 ```
 
 ```coffee
 kattUtil = require 'katt-util'
 kattBlueprint = '...'
 
-beautifulKattBleuprint = kattUtil.format kattBlueprint
+beautifulKattBlueprint = kattUtil.format kattBlueprint
+```
+
+### HAR-to-KATT converter
+
+```bash
+har2katt FILE ...
+```
+
+```coffee
+kattUtil = require 'katt-util'
+har = '...'
+
+kattBlueprint = kattUtil.har2katt harr
 ```
 
 
