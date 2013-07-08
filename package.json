@@ -25,6 +25,7 @@
     }
   ],
   "bin": {
+    "har2katt": "bin/har2katt.coffee",
     "katt-lint": "bin/lint.coffee",
     "katt-format": "bin/format.coffee"
   },
@@ -50,6 +51,7 @@
   },
   "publishConfig": {
     "bin": {
+      "har2katt": "bin/har2katt.js",
       "katt-lint": "bin/lint.js",
       "katt-format": "bin/format.js"
     }
