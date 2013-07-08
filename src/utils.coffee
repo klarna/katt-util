@@ -14,10 +14,14 @@
    limitations under the License.
 ###
 
+_ = require 'lodash'
+
 exports.sortObj = (obj) ->
   result = {}
   keys = Object.keys(obj).sort()
-  result[key] = obj[key]  for key in keys
+  for key in keys
+    result[key] = obj[key]
+    result[key] = exports.sortObj obj[key]  if _.isPlainObject obj[key]
   result
 
 

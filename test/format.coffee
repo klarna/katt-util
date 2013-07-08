@@ -36,3 +36,7 @@ describe 'format', () ->
     it 'should return no error on valid JSON', () ->
       reqres = {headers:{'content-type':'application/json'}, body:'{}'}
       format.json(reqres, null, null, []).should.eql '{}'
+
+    it 'should sort object properties', () ->
+      reqres = {headers:{'content-type':'application/json'}, body:'{"foo":true,"bar":true}'}
+      format.json(reqres, null, null, []).should.eql '{\n    "bar": true,\n    "foo": true\n}'

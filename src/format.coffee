@@ -56,7 +56,6 @@ exports.json = (reqres, transaction, scenario) ->
   return reqres.body  unless utils.isJsonCT reqres.headers['content-type']
   content = reqres.body
   contentJSON = JSON.parse content
-  # Sort properties
-  # FIXME
+  contentJSON = utils.sortObj contentJSON
   prettyContentJSON = JSON.stringify contentJSON, null, 4
   reqres.body = prettyContentJSON
