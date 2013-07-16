@@ -18,12 +18,10 @@
     "type": "git",
     "url": "gitosis@git.internal.machines:katt-util.git"
   },
-  "licenses": [
-    {
-      "type": "Apache-2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0"
-    }
-  ],
+  "licenses": [{
+    "type": "Apache-2.0",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0"
+  }],
   "bin": {
     "har2katt": "bin/har2katt.coffee",
     "katt-lint": "bin/lint.coffee",
@@ -40,12 +38,13 @@
     "katt-blueprint-parser": "~1.1.0",
     "lodash": "~1.3.1"
   },
+  "optionalDependencies": {
+    "coffee-script": "~1.6.3"
+  },
   "devDependencies": {
     "chai": "~1.7.0",
-    "coffee-script": "~1.6.3",
     "coffeelint": "~0.5.6",
     "growl": "~1.7.0",
-    "lodash": "~1.3.1",
     "mocha": "~1.11.0",
     "testem": "~0.2.98"
   },
@@ -54,6 +53,7 @@
       "har2katt": "bin/har2katt.js",
       "katt-lint": "bin/lint.js",
       "katt-format": "bin/format.js"
-    }
+    },
+    "optionalDependencies": {}
   }
 }
