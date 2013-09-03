@@ -37,7 +37,7 @@ exports = module.exports = (blueprint, contentLinters = {}) ->
   for transaction in scenario.transactions
     for direction in ['request', 'response']
       reqres = transaction[direction]
-      headers = utils.normalizeHeaders reqres.headers
+      reqres.headers = utils.normalizeHeaders reqres.headers
       for linterKey, linter of contentLinters
         linterResult = []
         linter reqres, transaction, scenario, linterResult
