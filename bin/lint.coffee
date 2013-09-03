@@ -65,7 +65,7 @@ main = (args = process.args) ->
         details.push error.details.transaction.name  if error.details?.transaction
         details.push error.details.transaction.direction  if error.details?.transaction
         details = details.join ' '
-        console.log "#{type} #{details}", error.native
+        console.log "#{error.type} #{details}", error.native
   return exitCode
 
 process.exit main()  if require.main is module
