@@ -6,7 +6,12 @@ KATT utilities for KATT blueprints.
 ## Install
 
 ```bash
+# NPM distribution
 npm install katt-util
+
+# GIT source
+git clone --recurse-submodules https://github.com/klarna/katt-util.git
+npm install
 ```
 
 
