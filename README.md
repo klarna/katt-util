@@ -68,4 +68,4 @@ kattBlueprint = kattUtil.har2katt harr
 
 
   [1]: https://travis-ci.org/klarna/katt-util
-  [2]: https://travis-ci.org/klatna/katt-util.png
+  [2]: https://travis-ci.org/klarna/katt-util.png
