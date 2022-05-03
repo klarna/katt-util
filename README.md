@@ -1,4 +1,12 @@
-# KATT util [![Build Status][2]][1]
+# [DEPRECATED] KATT util [![Build Status][2]][1]
+
+---
+
+### ⚠ Important
+
+**This project is not maintaned anymore. Some dependencies are known to have security vulnerabilities. Install at your own risk.**
+
+---
 
 KATT utilities for KATT blueprints.
 
